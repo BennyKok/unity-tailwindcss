@@ -6,7 +6,7 @@ The core idea to use the same Tailwind CSS syntax to style Unity UIToolkit UI el
 
 ---
 
-https://cdn.discordapp.com/attachments/750213962716545054/1122496614825738251/unity-tailwind.mp4
+[https://cdn.discordapp.com/attachments/750213962716545054/1122496614825738251/unity-tailwind.mp4](https://github.com/BennyKok/unity-tailwindcss/assets/18395202/6d2947ff-fceb-4589-9935-9a10737f1deb)
 
 ## Roadmap
 
