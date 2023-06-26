@@ -12,9 +12,9 @@ The core idea to use the same Tailwind CSS syntax to style Unity UIToolkit UI el
 
 - [x] Basic styling (w-full, text-white, bg-red-500, etc)
 - [x] Basic layout (flex, flex-col, flex-row, etc)
-- [ ] Support Transform
-- [ ] Support Transition
-- [ ] Support Hover State
+- [ ] Support Transform (partial done, missing translate and negative values)
+- [x] Support Transition
+- [x] Support Hover, Active, Inactive State
 - [ ] Update color palette to latest Tailwind CSS
 - [ ] Custom Built-in UI elements that enable styling 
 

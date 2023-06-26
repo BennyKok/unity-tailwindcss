@@ -687,6 +687,110 @@ public class TextAlign : CSSProperty
     }
 }
 
+
+public class TransitionProperty : CSSProperty
+{
+    public TransitionProperty() : base("transition", "transition") { }
+
+    public override IEnumerable<string[]> GetRules()
+    {
+        yield return new string[] { "duration-0", "transition-duration: 0s;" };
+        yield return new string[] { "duration-75", "transition-duration: 75ms;" };
+        yield return new string[] { "duration-100", "transition-duration: 100ms;" };
+        yield return new string[] { "duration-150", "transition-duration: 150ms;" };
+        yield return new string[] { "duration-200", "transition-duration: 200ms;" };
+        yield return new string[] { "duration-300", "transition-duration: 300ms;" };
+        yield return new string[] { "duration-500", "transition-duration: 500ms;" };
+        yield return new string[] { "duration-700", "transition-duration: 700ms;" };
+        yield return new string[] { "duration-1000", "transition-duration: 1000ms;" };
+
+        yield return new string[] { "transition-none", "transition-property: none;" };
+        yield return new string[] { "transition-all", "transition-property: all; transition-timing-function: ease-in-out-cubic; transition-duration: 150ms;" };
+        yield return new string[] { "transition", "transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform; transition-timing-function: ease-in-out-cubic; transition-duration: 150ms;" };
+        yield return new string[] { "transition-colors", "transition-property: background-color, border-color, color, fill, stroke; transition-timing-function: ease-in-out-cubic; transition-duration: 150ms;" };
+        yield return new string[] { "transition-opacity", "transition-property: opacity; transition-timing-function: ease-in-out-cubic; transition-duration: 150ms;" };
+        yield return new string[] { "transition-shadow", "transition-property: box-shadow; transition-timing-function: ease-in-out-cubic; transition-duration: 150ms;" };
+        yield return new string[] { "transition-transform", "transition-property: transform; transition-timing-function: ease-in-out-cubic; transition-duration: 150ms;" };
+
+        yield return new string[] { "ease-linear", "transition-timing-function: linear;" };
+        yield return new string[] { "ease-in", "transition-timing-function: ease-in-out-cubic;" };
+        yield return new string[] { "ease-out", "transition-timing-function: ease-in-out-cubic;" };
+        yield return new string[] { "ease-in-out", "transition-timing-function: ease-in-out-cubic;" };
+
+        // delay
+        yield return new string[] { "delay-0", "transition-delay: 0s;" };
+        yield return new string[] { "delay-75", "transition-delay: 75ms;" };
+        yield return new string[] { "delay-100", "transition-delay: 100ms;" };
+        yield return new string[] { "delay-150", "transition-delay: 150ms;" };
+        yield return new string[] { "delay-200", "transition-delay: 200ms;" };
+        yield return new string[] { "delay-300", "transition-delay: 300ms;" };
+        yield return new string[] { "delay-500", "transition-delay: 500ms;" };
+        yield return new string[] { "delay-700", "transition-delay: 700ms;" };
+        yield return new string[] { "delay-1000", "transition-delay: 1000ms;" };
+
+    }
+}
+
+public class TransformProperty : CSSProperty
+{
+    public TransformProperty() : base("transform", "transform") { }
+
+    public override IEnumerable<string[]> GetRules()
+    {
+        // transform origin
+        yield return new string[] { "origin-center", "transform-origin: center;" };
+        yield return new string[] { "origin-top", "transform-origin: top;" };
+        yield return new string[] { "origin-top-right", "transform-origin: top right;" };
+        yield return new string[] { "origin-right", "transform-origin: right;" };
+        yield return new string[] { "origin-bottom-right", "transform-origin: bottom right;" };
+        yield return new string[] { "origin-bottom", "transform-origin: bottom;" };
+        yield return new string[] { "origin-bottom-left", "transform-origin: bottom left;" };
+        yield return new string[] { "origin-left", "transform-origin: left;" };
+        yield return new string[] { "origin-top-left", "transform-origin: top left;" };
+
+        // handle for scale and x y procedurally generated
+        yield return new string[] { $"scale-0", $"scale: 0 0;" };
+        yield return new string[] { $"scale-50", $"scale: 0.5 0.5;" };
+        yield return new string[] { $"scale-75", $"scale: 0.75 0.75;" };
+        yield return new string[] { $"scale-90", $"scale: 0.9 0.9;" };
+        yield return new string[] { $"scale-95", $"scale: 0.95 0.95;" };
+        yield return new string[] { $"scale-100", $"scale: 1 1;" };
+        yield return new string[] { $"scale-105", $"scale: 1.05 1.05;" };
+        yield return new string[] { $"scale-110", $"scale: 1.1 1.1;" };
+        yield return new string[] { $"scale-125", $"scale: 1.25 1.25;" };
+        yield return new string[] { $"scale-150", $"scale: 1.5 1.5;" };
+
+        yield return new string[] { $"scale-x-0", $"scale: 0 0;" };
+        yield return new string[] { $"scale-x-50", $"scale: 0.5 0;" };
+        yield return new string[] { $"scale-x-75", $"scale: 0.75 0;" };
+        yield return new string[] { $"scale-x-90", $"scale: 0.9 0;"  };
+        yield return new string[] { $"scale-x-95", $"scale: 0.95 0;" };
+        yield return new string[] { $"scale-x-100", $"scale: 1 0;" };
+        yield return new string[] { $"scale-x-105", $"scale: 1.05 0;" };
+        yield return new string[] { $"scale-x-110", $"scale: 1.1 0;" };
+        yield return new string[] { $"scale-x-125", $"scale: 1.25 0;" };
+        yield return new string[] { $"scale-x-150", $"scale: 1.5 0;" };
+
+        yield return new string[] { $"scale-y-0", $"scale: 0 0;" };
+        yield return new string[] { $"scale-y-50", $"scale: 0 0.5;" };
+        yield return new string[] { $"scale-y-75", $"scale: 0 0.75;" };
+        yield return new string[] { $"scale-y-90", $"scale: 0 0.9;" };
+        yield return new string[] { $"scale-y-95", $"scale: 0 0.95;" };
+        yield return new string[] { $"scale-y-100", $"scale: 0 1;" };
+        yield return new string[] { $"scale-y-105", $"scale: 0 1.05;" };
+        yield return new string[] { $"scale-y-110", $"scale: 0 1.1;" };
+        yield return new string[] { $"scale-y-125", $"scale: 0 1.25;" };
+        yield return new string[] { $"scale-y-150", $"scale: 0 1.5;" };
+
+        // handle for rotate procedurally generated
+        yield return new string[] { $"rotate-0", $"rotate: 0deg;" };
+        yield return new string[] { $"rotate-45", $"rotate: 45deg;" };
+        yield return new string[] { $"rotate-90", $"rotate: 90deg;" };
+        yield return new string[] { $"rotate-135", $"rotate: 135deg;" };
+        yield return new string[] { $"rotate-180", $"rotate: 180deg;" };
+    }
+}
+
 public class USSGenerator
 {
     private static readonly CSSProperty[] properties =
@@ -728,6 +832,10 @@ public class USSGenerator
 
         new TextAlign(),
 
+        new TransformProperty(),
+
+        new TransitionProperty(),
+
         new GenericProperties() {
             GenerateRules = new string[][] {
                 new string[] {"visible", "visibility: visible;"},
@@ -735,6 +843,24 @@ public class USSGenerator
 
                 new string[] {"overflow-hidden", "overflow: hidden;"},
                 new string[] {"overflow-visible", "overflow: visible;"},
+        }},
+
+        new GenericProperties() {
+            GenerateRules = new string[][] {
+                new string[] {"font-bold", "-unity-font-style: bold;"},
+                new string[] {"font-normal", "-unity-font-style: normal;"},
+                new string[] {"italic", "-unity-font-style: italic;"},
+        }},
+
+
+        new GenericProperties() {
+            GenerateRules = new string[][] {
+                new string[] {"tracking-tighter", "letter-spacing: -5px"},
+                new string[] {"tracking-tight", "letter-spacing: -2.5px"},
+                new string[] {"tracking-normal", "letter-spacing: 0px"},
+                new string[] {"tracking-wide", "letter-spacing: 2.5px"},
+                new string[] {"tracking-wider", "letter-spacing: 5px"},
+                new string[] {"tracking-widest", "letter-spacing: 10px"},
         }},
 
 /*
@@ -806,5 +932,20 @@ justify-content: flex-start | flex-end | center | space-between | space-around
                 writer.WriteLine($".{rule[0]} {{ {rule[1]} }}");
             }
         }
+
+        // hover:
+        foreach (CSSProperty property in properties)
+            foreach (string[] rule in property.GetRules())
+                writer.WriteLine($".hover-{rule[0]}:hover {{ {rule[1]} }}");
+
+        // active
+        foreach (CSSProperty property in properties)
+            foreach (string[] rule in property.GetRules())
+                writer.WriteLine($".active-{rule[0]}:active {{ {rule[1]} }}");
+
+        // inactive
+        foreach (CSSProperty property in properties)
+            foreach (string[] rule in property.GetRules())
+                writer.WriteLine($".inactive-{rule[0]}:inactive {{ {rule[1]} }}");
     }
 }
