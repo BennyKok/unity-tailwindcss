@@ -181,6 +181,23 @@ namespace UnityReactIcons
                         svgImporter.SvgType = (SVGType)svgType.index;
                         EditorUtility.SetDirty(svgImporter);
                         svgImporter.SaveAndReimport();
+
+                        if (svgImporter.SvgType == SVGType.UIToolkit)
+                        {
+                            var size = "100%";
+                            var code = @$"
+<ui:UXML xmlns:ui=""UnityEngine.UIElements"" xmlns:uie=""UnityEditor.UIElements""
+    xsi=""http://www.w3.org/2001/XMLSchema-instance"" engine=""UnityEngine.UIElements""
+    editor=""UnityEditor.UIElements"">
+    <ui:Image
+        style=""--unity-image: url(&apos;project://database/{path.Replace(Application.dataPath, "Assets")}?&amp;guid={AssetDatabase.AssetPathToGUID(path.Replace(Application.dataPath, "Assets"))}&amp;type=3&apos;); width: {size}; height: {size};"" />
+</ui:UXML>
+                            ";
+
+                            File.WriteAllText(
+                                path.Substring(0, path.LastIndexOf('/')) + '/' + requestItem.iconId + ".uxml"
+                                , code);
+                        }
                     }
                     else
                     {
@@ -405,13 +422,17 @@ namespace UnityReactIcons
                 var label = element.Q<Label>();
                 var image = element.Q<Image>();
 
+
                 if (index >= iconsListGrid.Count || i >= iconsListGrid[index].Count) continue;
 
-                label.text = iconsListGrid[index][i];
+                var target = iconsListGrid[index][i];
+                label.text = target;
 
                 element.style.opacity = 0;
                 GetIconAsync(currentIconPack.id, label.text).ContinueWith(response =>
                 {
+                    if (label.text != target) return;
+
                     LoadIconIntoImage(image, response.Result);
                     element.style.opacity = 1;
 
