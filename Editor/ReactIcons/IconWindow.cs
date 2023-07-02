@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -84,7 +85,7 @@ namespace UnityReactIcons
             // Create directory if it does not exist
             Directory.CreateDirectory(projectPath + directoryPath);
 
-            Debug.Log(projectPath + filePath);
+            // Debug.Log(projectPath + filePath);
 
             File.WriteAllText(projectPath + filePath, json);
         }
@@ -105,13 +106,17 @@ namespace UnityReactIcons
 
             // Load the UXML and USS
             // get relative path of this current c# file
-            var path = AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(this));
-            // get directory path
-            path = path.Substring(0, path.LastIndexOf('/'));
+            // var path = AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(this));
+            // // get directory path
+            // path = path.Substring(0, path.LastIndexOf('/'));
             // Debug.Log(path);
 
-            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path + "/IconWindow.uxml");
-            var styles = AssetDatabase.LoadAssetAtPath<StyleSheet>(path + "/IconWindow.uss");
+            var csScriptPath = AssetDatabase.GUIDToAssetPath("fe8f7a2ffd8b54d3691c5e5503861f1e");
+            var csFileName = Path.GetFileNameWithoutExtension(csScriptPath);
+            var csDirectory = Path.GetDirectoryName(csScriptPath);
+
+            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(csDirectory + "/IconWindow.uxml");
+            var styles = AssetDatabase.LoadAssetAtPath<StyleSheet>(csDirectory + "/IconWindow.uss");
 
             // Clone the visual tree and apply styles
             VisualElement labelFromUXML = visualTree.CloneTree().Children().First();
@@ -212,6 +217,7 @@ namespace UnityReactIcons
                 allIconPack = task.Result.packs;
                 iconPacksListView.itemsSource = task.Result.packs;
                 iconPacksListView.selectedIndex = 0;
+                iconPacksListView.RefreshItems();
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
@@ -272,6 +278,7 @@ namespace UnityReactIcons
                 currentList.Add(iconsList[i]);
             }
             iconsListView.itemsSource = iconsListGrid;
+            iconsListView.RefreshItems();
         }
 
         private void SetGridMode(bool on)
@@ -321,16 +328,16 @@ namespace UnityReactIcons
         private async void IconPacksSelectionChange(IEnumerable<object> selectedItems)
         {
             iconsListView.itemsSource = new object[0];
+            iconsListView.RefreshItems();
 
-            foreach (var item in selectedItems)
-            {
-                currentIconPack = item as IconPack;
-                var iconResponse = await GetIconsAsync(currentIconPack.id);
+            var item = selectedItems.First();
 
-                iconsList = new List<string>(iconResponse.icons);
-                MakeGrid(iconsList);
-                // SetGridMode(true, iconsList);
-            }
+            currentIconPack = item as IconPack;
+            var iconResponse = await GetIconsAsync(currentIconPack.id);
+
+            iconsList = new List<string>(iconResponse.icons);
+            MakeGrid(iconsList);
+            // SetGridMode(true, iconsList);
 
             SetGridMode(true);
         }
@@ -431,6 +438,7 @@ namespace UnityReactIcons
         private void SearchValueChangedPack(ChangeEvent<string> evt)
         {
             iconPacksListView.itemsSource = allIconPack.FindAll(pack => pack.name.ToLower().Contains(evt.newValue.ToLower()));
+            iconPacksListView.RefreshItems();
         }
 
         // Search field value change callback
