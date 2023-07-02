@@ -7,6 +7,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "com.unity.vectorgraphics": ""
+    "com.unity.vectorgraphics": "2.0.0"
   }
 }
