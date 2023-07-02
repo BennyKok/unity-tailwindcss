@@ -1,0 +1,37 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" version="1.0" editor-extension-mode="True">
+    <Style src="project://database/Packages/unity-tailwindcss/Editor/ReactIcons/IconWindow.uss?fileID=7433441132597879392&amp;guid=22f1f0293a6b94fa0ac4c22d651b4456&amp;type=3#IconWindow" />
+    <ui:Box class="container">
+        <ui:VisualElement style="width: 100%; height: 100%; flex-direction: row;">
+            <ui:VisualElement style="width: 100%; height: 100%;">
+                <ui:TwoPaneSplitView orientation="horizontal" fixed="false" left-value="150" right-value="150" fixed-pane-initial-dimension="200" class="splitter" style="margin-right: 0;">
+                    <ui:VisualElement>
+                        <uie:Toolbar>
+                            <uie:ToolbarSearchField focusable="true" name="searchFieldPack" style="width: auto; flex-grow: 1; flex-basis: 1px;" />
+                            <uie:ToolbarMenu display-tooltip-when-elided="true" name="menu" text="Options" style="height: 17px; width: 66px;" />
+                        </uie:Toolbar>
+                        <ui:ListView name="iconPacksListView" class="iconPacksListView" />
+                    </ui:VisualElement>
+                    <ui:VisualElement>
+                        <uie:Toolbar style="justify-content: space-between;">
+                            <uie:ToolbarSearchField focusable="true" name="searchField" class="searchField" style="flex-grow: 1; width: auto; flex-basis: 1px;" />
+                        </uie:Toolbar>
+                        <ui:ListView name="iconsListView" fixed-item-height="100" class="iconsListView" />
+                    </ui:VisualElement>
+                </ui:TwoPaneSplitView>
+            </ui:VisualElement>
+            <ui:VisualElement name="detailPane" class="detailPane" style="min-width: 220px;">
+                <ui:VisualElement>
+                    <ui:Image name="image" style="height: 200px; background-color: rgb(84, 84, 84); padding-left: 32px; padding-right: 32px; padding-top: 32px; padding-bottom: 32px; border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; margin-left: 6px; margin-right: 6px; margin-top: 6px; margin-bottom: 6px;" />
+                    <ui:Label text="Select an icon" display-tooltip-when-elided="true" name="iconDetailsLabel" style="white-space: normal; padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 12px;" />
+                </ui:VisualElement>
+                <ui:VisualElement>
+                    <ui:DropdownField label="Asset Type" index="0" choices="SVG,Sprite" name="assetType" />
+                    <ui:DropdownField label="SVG Type" index="3" choices="VectorSprite,TexturedSprite,Texture2D,UIToolkit,UISVGImage" name="svgType" />
+                    <ui:Button text="Import" display-tooltip-when-elided="true" name="importButton" style="margin-bottom: 8px; height: 24px;">
+                        <ui:VisualElement style="background-image: none; width: 12px; height: 12px; -unity-text-outline-color: rgb(56, 56, 56); -unity-background-image-tint-color: rgb(255, 255, 255); left: 123px; position: relative; top: 4px;" />
+                    </ui:Button>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:Box>
+</ui:UXML>
