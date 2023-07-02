@@ -1,7 +1,12 @@
 {
     "name": "com.benny.unity-tailwindcss",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:68550284b645f4b9894995579f34290a",
+        "GUID:720d33f97ce5b450cbb9c9941462dee9",
+        "GUID:2bafac87e7f4b9b418d9448d219b01ab",
+        "GUID:343deaaf83e0cee4ca978e7df0b80d21"
+    ],
     "includePlatforms": [
         "Editor"
     ],
