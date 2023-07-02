@@ -358,21 +358,21 @@ public class DimensionProperty : CSSProperty
 [Serializable]
 public class Palette
 {
-    public string paletteName { get; set; }
-    public Swatch[] swatches { get; set; }
+    public string paletteName;
+    public Swatch[] swatches;
 }
 
 [Serializable]
 public class ArrayOfPalette
 {
-    public Palette[] palettes { get; set; }
+    public Palette[] colors;
 }
 
 [Serializable]
 public class Swatch
 {
-    public string name { get; set; }
-    public string color { get; set; }
+    public string name;
+    public string color;
 }
 
 public class ColorProperty : CSSProperty
@@ -434,11 +434,12 @@ public class ColorProperty : CSSProperty
 
         var colorsMap = new List<string[]>();
 
-        var palettes = JsonConvert.DeserializeObject<Palette[]>(json);
+        // var palettes = JsonConvert.DeserializeObject<Palette[]>(json);
+        ArrayOfPalette palettes = JsonUtility.FromJson<ArrayOfPalette>(json);
 
         // Debug.Log(palettes.palettes);
 
-        foreach (var palette in palettes)
+        foreach (var palette in palettes.colors)
         {
             foreach (var swatch in palette.swatches)
             {
@@ -763,7 +764,7 @@ public class TransformProperty : CSSProperty
         yield return new string[] { $"scale-x-0", $"scale: 0 0;" };
         yield return new string[] { $"scale-x-50", $"scale: 0.5 0;" };
         yield return new string[] { $"scale-x-75", $"scale: 0.75 0;" };
-        yield return new string[] { $"scale-x-90", $"scale: 0.9 0;"  };
+        yield return new string[] { $"scale-x-90", $"scale: 0.9 0;" };
         yield return new string[] { $"scale-x-95", $"scale: 0.95 0;" };
         yield return new string[] { $"scale-x-100", $"scale: 1 0;" };
         yield return new string[] { $"scale-x-105", $"scale: 1.05 0;" };
