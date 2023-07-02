@@ -171,8 +171,8 @@ namespace UnityReactIcons
                         path += ".svg";
 
                         File.WriteAllText(path, requestItem
-                            .svg.Replace("stroke=\"currentColor\"", "")
-                            .Replace("fill=\"currentColor\"", "")
+                            .svg.Replace("stroke=\"currentColor\"", "stroke=\"white\"")
+                            .Replace("fill=\"currentColor\"", "fill=\"white\"")
                         );
 
                         AssetDatabase.ImportAsset(path.Replace(Application.dataPath, "Assets"), ImportAssetOptions.ForceSynchronousImport);
