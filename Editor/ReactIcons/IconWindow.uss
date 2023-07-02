@@ -78,8 +78,6 @@
 }
 
 .iconItem > Label {
-    word-wrap: break-word;
-    white-space: nowrap;
     -unity-text-align: upper-left;
     margin-left: 2px;
     overflow: hidden;
