@@ -252,7 +252,7 @@ namespace UnityReactIcons
         private string GetProjectUrl()
         {
 #if UNITY_2022_2_OR_NEWER
-            return $"<a href=\"{currentIconPack.projectUrl}\">{currentIconPack.projectUrl}</a>"
+            return $"<a href=\"{currentIconPack.projectUrl}\">{currentIconPack.projectUrl}</a>";
 #endif
             return currentIconPack.projectUrl;
         }
