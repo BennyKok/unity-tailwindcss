@@ -5,5 +5,8 @@
   "scripts": {},
   "keywords": [],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "com.unity.vectorgraphics": ""
+  }
 }
