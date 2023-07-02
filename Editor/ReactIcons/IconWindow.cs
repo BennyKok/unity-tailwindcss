@@ -17,7 +17,8 @@ namespace UnityReactIcons
     public class IconWindow : EditorWindow
     {
         public static Dictionary<string, object> cache = new();
-
+        private static readonly string directoryPath = Path.Combine("Library/unity-tailwindcss");
+        private static readonly string filePath = Path.Combine(directoryPath, "icons_cache.json");
         private const string endpointUrl = "https://unity-react-icons-backend.vercel.app";
         private const string developmentEndpointUrl = "http://localhost:3000";
         private string iconsListUrl = endpointUrl + "/list-icons";
@@ -51,9 +52,53 @@ namespace UnityReactIcons
             iconPackUrl = endpointUrl + "/icon";
         }
 
+        private void LoadCache()
+        {
+            var projectPath = Application.dataPath.Substring(0, Application.dataPath.LastIndexOf('/')) + '/';
+
+            if (File.Exists(projectPath + filePath))
+            {
+                string json = File.ReadAllText(projectPath + filePath);
+                SerializableDictionaryWrapper wrapper = JsonUtility.FromJson<SerializableDictionaryWrapper>(json);
+                cache = wrapper.ToDictionary();
+            }
+            else
+            {
+                cache = new Dictionary<string, object>();
+            }
+        }
+
+        private void SaveCache()
+        {
+            SerializableDictionaryWrapper wrapper = new SerializableDictionaryWrapper();
+            foreach (KeyValuePair<string, object> kvp in cache)
+            {
+                if (kvp.Value is not string) continue;
+                wrapper.TryAdd(kvp.Key, kvp.Value.ToString()); // Assuming that the object can be represented as string
+            }
+
+            string json = JsonUtility.ToJson(wrapper);
+
+            var projectPath = Application.dataPath.Substring(0, Application.dataPath.LastIndexOf('/')) + '/';
+
+            // Create directory if it does not exist
+            Directory.CreateDirectory(projectPath + directoryPath);
+
+            Debug.Log(projectPath + filePath);
+
+            File.WriteAllText(projectPath + filePath, json);
+        }
+
+        private void OnDisable()
+        {
+            SaveCache();
+        }
+
+
         public void OnEnable()
         {
             // cache.Clear();
+            LoadCache();
 
             // Reference to the root of the window.
             var root = rootVisualElement;
@@ -107,7 +152,7 @@ namespace UnityReactIcons
                 {
                     if (lastSelectIconId == null) return;
 
-                    var requestItem = cache[lastSelectIconId] as IconDetailResponse;
+                    var requestItem = JsonUtility.FromJson<IconDetailResponse>(cache[lastSelectIconId] as string);
 
                     // create an svg file under Assets/Icons
                     string path = Application.dataPath + "/Icons";
@@ -275,8 +320,8 @@ namespace UnityReactIcons
 
         private async void IconPacksSelectionChange(IEnumerable<object> selectedItems)
         {
-            iconsListView.itemsSource = null;
-            
+            iconsListView.itemsSource = new object[0];
+
             foreach (var item in selectedItems)
             {
                 currentIconPack = item as IconPack;
@@ -412,7 +457,7 @@ namespace UnityReactIcons
         private async Task<IconPackResponse> GetIconPacksAsync()
         {
             if (cache.ContainsKey("iconPacks"))
-                return cache["iconPacks"] as IconPackResponse;
+                return JsonUtility.FromJson<IconPackResponse>(cache["iconPacks"] as string);
 
             using (UnityWebRequest webRequest = UnityWebRequest.Get(iconsListUrl))
             {
@@ -422,7 +467,7 @@ namespace UnityReactIcons
                 if (webRequest.result == UnityWebRequest.Result.Success)
                 {
                     IconPackResponse iconPackResponse = JsonUtility.FromJson<IconPackResponse>(webRequest.downloadHandler.text);
-                    cache["iconPacks"] = iconPackResponse;
+                    cache["iconPacks"] = webRequest.downloadHandler.text;
                     return iconPackResponse;
                 }
                 else
@@ -442,7 +487,7 @@ namespace UnityReactIcons
             string json = JsonUtility.ToJson(iconPackRequest);
 
             if (cache.ContainsKey(iconPackId))
-                return cache[iconPackId] as IconResponse;
+                return JsonUtility.FromJson<IconResponse>(cache[iconPackId] as string);
 
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
 
@@ -455,7 +500,7 @@ namespace UnityReactIcons
                 if (webRequest.result == UnityWebRequest.Result.Success)
                 {
                     IconResponse iconResponse = JsonUtility.FromJson<IconResponse>(webRequest.downloadHandler.text);
-                    cache[iconPackId] = iconResponse;
+                    cache[iconPackId] = webRequest.downloadHandler.text;
                     return iconResponse;
                 }
                 else
@@ -475,7 +520,7 @@ namespace UnityReactIcons
             };
 
             if (cache.TryGetValue(iconId, out var res))
-                return res as IconDetailResponse;
+                return JsonUtility.FromJson<IconDetailResponse>(res as string);
 
             string json = JsonUtility.ToJson(iconPackRequest);
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
@@ -489,7 +534,7 @@ namespace UnityReactIcons
                 if (webRequest.result == UnityWebRequest.Result.Success)
                 {
                     IconDetailResponse iconResponse = JsonUtility.FromJson<IconDetailResponse>(webRequest.downloadHandler.text);
-                    cache[iconId] = iconResponse;
+                    cache[iconId] = webRequest.downloadHandler.text;
                     return iconResponse;
                 }
                 else
@@ -537,18 +582,51 @@ namespace UnityReactIcons
         public string iconPackId;
         public string iconId;
     }
-}
 
-public static class UnityWebRequestExtension
-{
-    public static TaskAwaiter<UnityWebRequest.Result> GetAwaiter(this UnityWebRequestAsyncOperation reqOp)
+    [Serializable]
+    public class SerializableDictionaryWrapper
     {
-        TaskCompletionSource<UnityWebRequest.Result> tsc = new();
-        reqOp.completed += asyncOp => tsc.TrySetResult(reqOp.webRequest.result);
+        // JsonUtility only works with fields, not properties
+        public List<string> keys = new List<string>();
+        public List<string> values = new List<string>();
 
-        if (reqOp.isDone)
-            tsc.TrySetResult(reqOp.webRequest.result);
+        public void Clear()
+        {
+            keys.Clear();
+            values.Clear();
+        }
 
-        return tsc.Task.GetAwaiter();
+        public void TryAdd(string key, string value)
+        {
+            if (!keys.Contains(key))
+            {
+                keys.Add(key);
+                values.Add(value);
+            }
+        }
+
+        public Dictionary<string, object> ToDictionary()
+        {
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            for (int i = 0; i < keys.Count; i++)
+            {
+                result.Add(keys[i], values[i]);
+            }
+            return result;
+        }
+    }
+
+    public static class UnityWebRequestExtension
+    {
+        public static TaskAwaiter<UnityWebRequest.Result> GetAwaiter(this UnityWebRequestAsyncOperation reqOp)
+        {
+            TaskCompletionSource<UnityWebRequest.Result> tsc = new();
+            reqOp.completed += asyncOp => tsc.TrySetResult(reqOp.webRequest.result);
+
+            if (reqOp.isDone)
+                tsc.TrySetResult(reqOp.webRequest.result);
+
+            return tsc.Task.GetAwaiter();
+        }
     }
 }
