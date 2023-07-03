@@ -1,3 +1,11 @@
+#### This repo contains two major functional features.
+
+# ✨Icons Finder
+
+Forget about importing png icons and finding them, NOW, Instantly load any open source icons to your game UI, or editor UI with Icons Finder. Read the original Twitter thread for more info https://twitter.com/BennyKokMusic/status/1675546561277984769 
+
+https://github.com/BennyKok/unity-tailwindcss/assets/18395202/bcc143cf-dc2d-42d6-96e7-ae6392c160b2
+
 # Tailwind CSS for Unity UIToolkit
 
 ⚠️ This is a proof of concept and not ready for production use.
