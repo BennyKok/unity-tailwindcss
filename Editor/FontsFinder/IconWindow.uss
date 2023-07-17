@@ -1,0 +1,101 @@
+.container {
+    flex-grow: 1;
+    flex-direction: column;
+    overflow: scroll;
+    width: 100%;
+    height: 100%;
+}
+
+.splitter {
+    height: 100%;
+    flex-grow: 1;
+    margin: 5px;
+}
+
+.iconPacksListView {
+    flex-grow: 1;
+    background-color: rgb(26, 26, 26);
+    border-color: rgb(32, 32, 32);
+    border-width: 1px;
+    border-radius: 2px;
+    color: rgb(238, 238, 238);
+    flex-wrap: wrap;
+}
+
+.iconsListView {
+    flex-grow: 1;
+    background-color: rgb(26, 26, 26);
+    border-color: rgb(32, 32, 32);
+    border-width: 1px;
+    border-radius: 2px;
+    color: rgb(238, 238, 238);
+    flex-wrap: wrap;
+}
+
+.iconPackLabel {
+    font-weight: bold;
+    margin: 5px;
+    -unity-text-align: middle-left;
+    padding-left: 12px;
+}
+
+.unity-collection-view__item--selected {
+}
+
+.unity-list-view__item {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    transition-property: background-color;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+}
+
+.detailPane {
+    width: auto;
+    max-width: 300px;
+    min-width: 200px;
+    justify-content: space-between;
+}
+
+.iconItem {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 200px;
+    transition-property: opacity, background-color;
+    transition-duration: 1s, 0.2s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+}
+
+.iconItem > Image {
+    width: 100%;
+    height: 161px;
+}
+
+.iconItem > Label {
+    -unity-text-align: upper-left;
+    margin-left: 2px;
+    overflow: hidden;
+    margin-right: 2px;
+}
+
+.iconsListView .iconItemContainer:hover {
+    background-color: transparent;
+}
+
+.iconsListView .iconItemContainer:checked {
+    background-color: transparent;
+}
+
+.checked {
+    background-color: rgb(44, 93, 135);
+}
+
+.iconItemContainer {
+    flex-direction: row;
+}
