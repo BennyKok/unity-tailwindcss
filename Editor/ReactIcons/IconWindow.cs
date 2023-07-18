@@ -53,6 +53,22 @@ namespace UnityReactIcons
             iconPackUrl = endpointUrl + "/icon";
         }
 
+        private void OnDestroy()
+        {
+            // Debug.Log("Cleaning up...");
+            // find all the object in the cache that have keys ends with _texture and destory it
+            foreach (KeyValuePair<string, object> kvp in cache)
+            {
+                if (kvp.Key.EndsWith("_texture"))
+                {
+                    DestroyImmediate(kvp.Value as Texture2D);
+                }
+            }
+
+            // clean up the cache 
+            cache.Clear();
+        }
+
         private void LoadCache()
         {
             var projectPath = Application.dataPath.Substring(0, Application.dataPath.LastIndexOf('/')) + '/';
@@ -71,6 +87,8 @@ namespace UnityReactIcons
 
         private void SaveCache()
         {
+            if (cache.Count == 0) return;
+
             SerializableDictionaryWrapper wrapper = new SerializableDictionaryWrapper();
             foreach (KeyValuePair<string, object> kvp in cache)
             {
@@ -94,7 +112,6 @@ namespace UnityReactIcons
         {
             SaveCache();
         }
-
 
         public void OnEnable()
         {
@@ -260,6 +277,7 @@ namespace UnityReactIcons
 
             byte[] imageBytes = Convert.FromBase64String(iconResponse.base64ImagePreview);
             Texture2D tex = new Texture2D(2, 2);
+            tex.hideFlags = HideFlags.DontSaveInEditor;
             if (tex.LoadImage(imageBytes))
                 image.image = tex;
 
