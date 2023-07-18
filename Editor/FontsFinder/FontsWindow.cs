@@ -31,7 +31,7 @@ namespace UnityReactIcons
         private ListView iconsListView;
         private VisualElement detailPane;
         private Image image;
-        private Button importButton;
+        private Button importButton, viewFontButton;
         private Label iconDetailsLabel;
         private TextField searchField;
         private TextField searchFieldPack;
@@ -168,7 +168,16 @@ namespace UnityReactIcons
             iconPacksListView.onSelectionChange += IconPacksSelectionChange;
 
             iconDetailsLabel = root.Q<Label>("iconDetailsLabel");
-            importButton = root.Q<Button>("importButton");
+            importButton = root.Q<Button>(nameof(importButton));
+            viewFontButton = root.Q<Button>(nameof(viewFontButton));
+
+            viewFontButton.RegisterCallback<ClickEvent>(
+                (evt) =>
+                {
+                    if (currentIconPack == null) return;
+                    Application.OpenURL("https://fonts.google.com/specimen/" + Uri.EscapeDataString(lastSelectIconId));
+                }
+            );
 
             importButton.RegisterCallback<ClickEvent>(
                 async (evt) =>
