@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" version="1.0" editor-extension-mode="True">
-    <ui:Template name="MdOpenInNew" src="../Icons/MdOpenInNew.uxml?fileID=9197481963319205126&amp;guid=190274b1188874cb1ba598bd7bdc188f&amp;type=3#MdOpenInNew" />
+    <ui:Template name="MdOpenInNew" src="project://database/Packages/unity-tailwindcss/Editor/Icons/MdOpenInNew.uxml?fileID=9197481963319205126&amp;guid=190274b1188874cb1ba598bd7bdc188f&amp;type=3#MdOpenInNew" />
     <Style src="project://database/Packages/unity-tailwindcss/Editor/FontsFinder/IconWindow.uss?fileID=7433441132597879392&amp;guid=83edf001b1a274dbbb72436077967789&amp;type=3#IconWindow" />
     <ui:Box class="container">
         <ui:VisualElement style="width: 100%; height: 100%; flex-direction: row;">
@@ -30,9 +30,9 @@
                     <ui:Label text="Select a font" display-tooltip-when-elided="true" name="iconDetailsLabel" style="white-space: normal; padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 12px;" />
                 </ui:VisualElement>
                 <ui:VisualElement>
-                    <ui:Button text="Import" display-tooltip-when-elided="true" name="importButton" style="margin-bottom: 8px; height: 24px;">
-                        <ui:VisualElement style="background-image: none; width: 12px; height: 12px; -unity-text-outline-color: rgb(56, 56, 56); -unity-background-image-tint-color: rgb(255, 255, 255); left: 123px; position: relative; top: 4px;" />
-                    </ui:Button>
+                    <ui:Toggle label="Create TMP Font" value="true" name="createTMPFont" />
+                    <ui:Button text="Import" display-tooltip-when-elided="true" name="importButton" style="height: 24px;" />
+                    <ui:Button text="Update Scene TMP" display-tooltip-when-elided="true" name="updateTMPButton" style="margin-bottom: 8px; height: 24px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

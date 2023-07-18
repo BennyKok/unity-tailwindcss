@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using GitHub.Unity;
+using TMPro;
 using Unity.VectorGraphics.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -31,10 +32,11 @@ namespace UnityReactIcons
         private ListView iconsListView;
         private VisualElement detailPane;
         private Image image;
-        private Button importButton, viewFontButton;
+        private Button importButton, viewFontButton, updateTMPButton;
         private Label iconDetailsLabel;
         private TextField searchField;
         private TextField searchFieldPack;
+        private Toggle createTMPFont;
         // private DropdownField svgType, assetType;
         private ToolbarMenu menu;
         private List<List<string>> iconsListGrid = new();
@@ -48,6 +50,8 @@ namespace UnityReactIcons
         {
             FontsWindow wnd = GetWindow<FontsWindow>();
             wnd.titleContent = new GUIContent("Fonts Window");
+            // set the window size
+            wnd.minSize = new Vector2(800, 600);
         }
 
         private void UpdateEndPointsTarget(string endpointUrl)
@@ -152,6 +156,7 @@ namespace UnityReactIcons
             // svgType = root.Q<DropdownField>("svgType");
             // assetType = root.Q<DropdownField>("assetType");
             menu = root.Q<ToolbarMenu>("menu");
+            createTMPFont = root.Q<Toggle>("createTMPFont");
 
             menu.menu.AppendAction("Icon Server/Default", a =>
             {
@@ -170,12 +175,40 @@ namespace UnityReactIcons
             iconDetailsLabel = root.Q<Label>("iconDetailsLabel");
             importButton = root.Q<Button>(nameof(importButton));
             viewFontButton = root.Q<Button>(nameof(viewFontButton));
+            updateTMPButton = root.Q<Button>(nameof(updateTMPButton));
 
             viewFontButton.RegisterCallback<ClickEvent>(
                 (evt) =>
                 {
                     if (currentIconPack == null) return;
                     Application.OpenURL("https://fonts.google.com/specimen/" + Uri.EscapeDataString(lastSelectIconId));
+                }
+            );
+
+            // Find all TextMeshPro components in the scene and update them with the new font
+            updateTMPButton.RegisterCallback<ClickEvent>(
+                (evt) =>
+                {
+                    if (currentIconPack == null) return;
+                    var tmps = FindObjectsOfType<TextMeshProUGUI>();
+                    var path = "Assets/Fonts/" + lastSelectIconId + " SDF.asset";
+                    // var font = Resources.Load<TMP_FontAsset>(path);
+                    var font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(path);
+
+                    if (font == null)
+                    {
+                        Debug.LogError(lastSelectIconId + " font not found in Fonts folder, please click import first. Path: " + path);
+                        return;
+                    }
+
+                    Undo.RecordObjects(
+                        tmps,
+                        "Update TMP Font"
+                    );
+
+                    Debug.Log("Updating " + tmps.Length + " TMP components with " + lastSelectIconId + " font.");
+                    foreach (var tmp in tmps)
+                        tmp.font = font;
                 }
             );
 
@@ -207,10 +240,13 @@ namespace UnityReactIcons
                     AssetDatabase.ImportAsset(finalPath, ImportAssetOptions.ForceSynchronousImport);
                     AssetDatabase.Refresh();
 
-                    Selection.objects = new[] {
-                        AssetDatabase.LoadAssetAtPath<Font>(finalPath)
-                    };
-                    EditorApplication.ExecuteMenuItem("Assets/Create/TextMeshPro/Font Asset");
+                    if (createTMPFont.value)
+                    {
+                        Selection.objects = new[] {
+                            AssetDatabase.LoadAssetAtPath<Font>(finalPath)
+                        };
+                        EditorApplication.ExecuteMenuItem("Assets/Create/TextMeshPro/Font Asset");
+                    }
 
                     importButton.text = "Import";
                     importButton.SetEnabled(true);
