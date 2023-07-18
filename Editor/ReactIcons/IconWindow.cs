@@ -207,7 +207,7 @@ namespace UnityReactIcons
     xsi=""http://www.w3.org/2001/XMLSchema-instance"" engine=""UnityEngine.UIElements""
     editor=""UnityEditor.UIElements"">
     <ui:Image
-        style=""--unity-image: url(&apos;project://database/{path.Replace(Application.dataPath, "Assets")}?&amp;guid={AssetDatabase.AssetPathToGUID(path.Replace(Application.dataPath, "Assets"))}&amp;type=3&apos;); width: {size}; height: {size};"" />
+        style=""--unity-image: url(&apos;{requestItem.iconId}.svg?&amp;guid={AssetDatabase.AssetPathToGUID(path.Replace(Application.dataPath, "Assets"))}&amp;type=3&apos;); width: {size}; height: {size};"" />
 </ui:UXML>
                             ";
 
