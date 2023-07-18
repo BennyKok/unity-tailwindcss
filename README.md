@@ -1,8 +1,22 @@
-#### This repo contains two major functional features.
+#### This repo contains three major functional features.
 
-# ✨Icons Finder
+# ✨ Fonts Finder
+
+Fonts? I've got you, load and hot swap fonts for realtime preview, no more downloading and importing manually.
+
+```
+Window -> Fonts Window
+```
+
+https://github.com/BennyKok/unity-tailwindcss/assets/18395202/8ece12d6-8daf-4043-88f4-b0eb9cfdccfa
+
+# ✨ Icons Finder
 
 Forget about importing png icons and finding them, NOW, Instantly load any open source icons to your game UI, or editor UI with Icons Finder. Read the original Twitter thread for more info https://twitter.com/BennyKokMusic/status/1675546561277984769 
+
+```
+Window -> Icons Window
+```
 
 https://github.com/BennyKok/unity-tailwindcss/assets/18395202/bcc143cf-dc2d-42d6-96e7-ae6392c160b2
 
@@ -30,8 +44,9 @@ The core idea to use the same Tailwind CSS syntax to style Unity UIToolkit UI el
 
 Via UPM.
 
+UPM install via git url -> 
 ```
-UPM install via git url -> https://github.com/BennyKok/unity-tailwindcss.git
+https://github.com/BennyKok/unity-tailwindcss.git
 ```
 
 You can also choose to add this as a submodule in your package folder.
