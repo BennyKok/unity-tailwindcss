@@ -167,6 +167,9 @@ namespace UnityReactIcons
 
                     var regularFont = webFont.files.Find(x => x.fontType == "regular");
 
+                    importButton.text = "Loading...";
+                    importButton.SetEnabled(false);
+
                     var fontFile = await GetFontFile(regularFont.url);
 
                     path += ".ttf";
@@ -181,6 +184,9 @@ namespace UnityReactIcons
                         AssetDatabase.LoadAssetAtPath<Font>(finalPath)
                     };
                     EditorApplication.ExecuteMenuItem("Assets/Create/TextMeshPro/Font Asset");
+
+                    importButton.text = "Import";
+                    importButton.SetEnabled(true);
 
                 }
             );
