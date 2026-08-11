@@ -62,4 +62,4 @@ Current implementation is by generating uss compatible utility css class that fo
 ## Explore
 More about BennyKok and his Unity related work.
 
-[Twitter](https://twitter.com/BennyKokMusic) | [Website](https://bennykok.com) | [AssetStore](https://assetstore.unity.com/publishers/28510)
+[Twitter](https://twitter.com/BennyKokMusic) | [Website](https://bennykok.com) | [Rhythm Game Starter](https://www.rhythm.game)
